@@ -42,8 +42,8 @@ def extractimages(squares):
     return images;
 def saveimages(path,images):
     for i in range(0,len(images)):
-        filename=path + "/Object"+str(i)+".png"
-
+        filename=""+path + "/Object"+str(i)+".png"
+        cv.SaveImage(filename,images[i])
         print (filename)
         print ("Image num:",i);
     pass;
