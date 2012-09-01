@@ -1,0 +1,2 @@
+ffmpeg -ss 00:00:36.00 -t 00:01:10.00 -i The_Brain_as_explained_by_John_Cleese.flv  The_Brain.flv
+./dump_faces_from_stream.sh ./The_Brain.flv /tmp/JC/TheBrain

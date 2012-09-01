@@ -36,20 +36,20 @@ def extractimages(squares):
     for square in squares:
         print(square);
         square_image=cv.GetSubRect(image,square[0]);
-        cv.ShowImage("SomeName",square_image);
-        cv.WaitKey(0);
+#        cv.ShowImage("SomeName",square_image);
+#        cv.WaitKey(0);
         images.append(square_image);
     return images;
 def saveimages(path,images):
     for i in range(0,len(images)):
-        filename=""+path + "/Object"+str(i)+".png"
+        filename=""+path + ".face"+str(i)+".png"
         cv.SaveImage(filename,images[i])
         print (filename)
         print ("Image num:",i);
     pass;
 
 #
-#   %progname -i <input file> -o <output file> -c <cascade classifier> [options]
+#   %progname -i <input file> -o [output file] -c <cascade classifier> [options]
 #
 def main():
     global image
@@ -62,13 +62,13 @@ def main():
 
     image=cv.LoadImage(args.input_image, cv.CV_LOAD_IMAGE_COLOR)
     cascade=cv.Load(args.cascade_classifier);
-    cv.ShowImage("SomeName",image);
-    cv.WaitKey(0);
+#    cv.ShowImage("SomeName",image);
+#    cv.WaitKey(0);
 
     squares=classify();
     images=extractimages(squares);
     if (args.output):
-        print ("Saving to"+args.output);
+        print ("Saving to "+args.output);
         saveimages(args.output,images);
         
 
