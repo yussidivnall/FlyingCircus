@@ -1,4 +1,53 @@
 ffmpeg -ss 00:00:36.00 -t 00:01:10.00 -i The_Brain_as_explained_by_John_Cleese.flv  The_Brain.flv
 ./dump_faces_from_stream.sh ./The_Brain.flv /tmp/JC/TheBrain
 
+
+find ./positives/ -name '*.png' > positives.dat
 find ./negatives/ -name '*.png' > negatives.dat
+#create 1
+opencv_createsamples -img /tmp/JC/TheBrainframe*.face*.png  -bg ./negatives.dat -vec ./TheBrain.face.samples.vec
+#create from list
+opencv_createsamples -info positives.dat -img  /tmp/JC/TheBrainframe*.face*.png -bg negatives.dat -vec positive_samples.vec -w 20 -h 20
+opencv_createsamples -info negatives.dat -img  ./positives/*.face*.png -bg negatives.dat -vec negative_samples.vec -w 20 -h 20
+
+#display samples
+opencv_createsamples -vec ./TheBrain.face.samples.vec
+
+#$ haartraining -data haarcascade -vec samples.vec -bg negatives.dat -nstages 20 -nsplits 2 -minhitrate 0.999 -maxfalsealarm 0.5 -npos 7000 -nneg 3019 -w 20 -h 20 -nonsym -mem 512 -mode ALL
+
+#opencv-haartraining -data trainout -vec data/positives.vec -bg negatives/bg.txt
+-nstages 20 -nsplits 2 -minhitrate 0.999 -maxfalsealarm 0.5 -npos 7000 -neg 2984
+-w 20 -h 20 -mem 512 -mode ALL
+
+opencv_haartraining -data trainout -vec positive_samples.vec -bg negatives.dat -npos 110 -nneg 1000 -h 20 -w 20
+
+
+Basically, to get harr training going:
+
+1. Get a sample video with only the person of interest, and with clear faceshots.
+You will probably need to prepare a video, you can use:
+$ffmpeg -ss 00:00:36.00 -t 00:01:10.00 -i fullvid.mpg  clippedvid.mpg
+
+2. Extract face images, into positive faces directory
+$./dump_faces_from_stream.sh clippedvid.mpg ./positives/
+
+3. Create negative samples, from a video with other people's faces, into negatives
+$./dump_faces_from_stream.sh otherfaces.mpg ./negatives/
+
+4. Verify the positives/*.png contains no negatives
+$display ./positives/*.png
+And delete bad images
+
+5. Generate image indexes
+$find ./positives/ -name "*.png" > ./positives.txt
+$find ./negatives/ -name "*.png" > ./negatives.txt
+
+6. Generate samples:
+$opencv_createsamples -info positives.txt -img  ./positives/*.png -bg negatives.txt -vec samples.vec -w 20 -h 20
+And If you care to see what that just did, run
+$opencv_createsamples -vec samples.vec
+to display the samples
+
+7. And create haar cascade:
+$opencv_haartraining -data training_data -vec samples.vec -bg negatives.dat -npos 110 -nneg 1000 -h 20 -w 20
+#Than talk a long walk, sleep, wake up, and wait.

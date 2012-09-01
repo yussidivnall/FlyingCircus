@@ -9,11 +9,11 @@
 mkdir "/tmp/$1.temp/"
 #mkdir  "$2/$fn/faces/"
 #ffmpeg -i $1 -r 1/5 /tmp/$1.temp/frame%03d.png
-ffmpeg -i $1 -r 1 /tmp/$1.temp/frame%03d.png
+ffmpeg -i $1 -r 1 tmp/$1.temp/frame%03d.png
 for fn in `ls /tmp/$1.temp/`
 do
     outpath="${2}${fn}"
     echo "dumping to $outpath "
-    echo python ./extract_faces.py -i /tmp/$1.temp/$fn -o $outpath -c ./cascade_classifiers/haarcascade_frontalface_default.xml
-    python ./extract_faces.py -i /tmp/$1.temp/$fn -o $outpath -c ./cascade_classifiers/haarcascade_frontalface_default.xml
+    echo python extract_faces.py -i /tmp/$1.temp/$fn -o $outpath -c ./cascade_classifiers/haarcascade_frontalface_default.xml
+    python extract_faces.py -i /tmp/$1.temp/$fn -o $outpath -c ./cascade_classifiers/haarcascade_frontalface_default.xml
 done
