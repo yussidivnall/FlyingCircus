@@ -3,17 +3,19 @@
 #[[ -e $1 ]] || echo "No such file"&& exit 1
 
 #[[ $2 ]] || echo "No output directory given";exit 1
-[[ -d $2 ]] || mkdir $2;
+[[ -d $2 ]] || mkdir -p $2;
 
-
-mkdir "/tmp/$1.temp/"
+in_vid_name=`basename $1`
+temp_dir="/tmp/face_dump/$in_vid_name/"
+echo $in_vid_name
+mkdir -p $temp_dir
 #mkdir  "$2/$fn/faces/"
 #ffmpeg -i $1 -r 1/5 /tmp/$1.temp/frame%03d.png
-ffmpeg -i $1 -r 1 tmp/$1.temp/frame%03d.png
-for fn in `ls /tmp/$1.temp/`
+ffmpeg -i $1 -r 1 "$temp_dir/$in_vid_name.frame%03d.png"
+for fn in `ls $temp_dir`
 do
     outpath="${2}${fn}"
     echo "dumping to $outpath "
-    echo python extract_faces.py -i /tmp/$1.temp/$fn -o $outpath -c ./cascade_classifiers/haarcascade_frontalface_default.xml
-    python extract_faces.py -i /tmp/$1.temp/$fn -o $outpath -c ./cascade_classifiers/haarcascade_frontalface_default.xml
+    echo python extract_faces.py -i $temp_dir$fn -o $outpath -c ./cascade_classifiers/haarcascade_frontalface_default.xml
+    python extract_faces.py -i $temp_dir$fn -o $outpath -c ./cascade_classifiers/haarcascade_frontalface_default.xml
 done
