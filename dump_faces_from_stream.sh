@@ -9,8 +9,6 @@ in_vid_name=`basename $1`
 temp_dir="/tmp/face_dump/$in_vid_name/"
 echo $in_vid_name
 mkdir -p $temp_dir
-#mkdir  "$2/$fn/faces/"
-#ffmpeg -i $1 -r 1/5 /tmp/$1.temp/frame%03d.png
 ffmpeg -i $1 -r 1 "$temp_dir/$in_vid_name.frame%03d.png"
 for fn in `ls $temp_dir`
 do
@@ -19,3 +17,4 @@ do
     echo python extract_faces.py -i $temp_dir$fn -o $outpath -c ./cascade_classifiers/haarcascade_frontalface_default.xml
     python extract_faces.py -i $temp_dir$fn -o $outpath -c ./cascade_classifiers/haarcascade_frontalface_default.xml
 done
+rm -r $temp_dir
