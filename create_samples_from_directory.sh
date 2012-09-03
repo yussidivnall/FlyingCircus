@@ -8,18 +8,17 @@ positives="positives.dat"
 negatives="negatives.dat"
 rm $positives
 rm $negatives
+echo "Creating positive images index"
 find $positive_in_path -name '*.png' -exec identify -format '%i 1 0 0 %w %h' \{\} \; > $positives
-echo "Generating positive images index"
-for fn in `find $positive_n_path -name "*.png"`
-do
-    width_height=`identify $fn |awk '{print $3}' | sed -e "s/x/ /g"`
-    echo $fn 1 1 $width_height  >> $positives
-done
-echo "Generating negative images index"
-for fn in `find $negative_n_path -name "*.png"`
-do
-    width_height=`identify $fn |awk '{print $3}' | sed -e "s/x/ /g"`
-    echo $fn 1 1 $width_height  >> $negatives
-done
+#find $negative_in_path -name '*.png' -exec identify -format '%i 1 0 0 %w %h' \{\} \; > $negatives
+echo "Creating negative images index"
+find  $negative_in_path -name '*.png' > $negatives
+num_pos=`wc -l $positives`
+#echo "opencv_createsamples -info $positives -vec $output_vec -w 20 -h 20 -num $(($num_pos-100))"
+opencv_createsamples -info $positives -vec $output_vec -w 20 -h 20 -num `wc -l $positives`
 
-opencv_createsamples -info $positives -vec $output_vec -w 20 -h 20 -num 10
+#For some reason this fails, might be that -npos needs to be less than opencv_createsamples...-num
+#No explanation, and not sure how much less
+#See comments in http://achuwilson.wordpress.com/2011/07/01/create-your-own-haar-classifier-for-detecting-objects-in-opencv/
+#opencv_haartraining -data out_training -vec out.vec -bg negatives.txt -w 20 -h 20 -nneg 3000 -npos 2829 -mode all
+

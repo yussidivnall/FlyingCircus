@@ -1,0 +1,61 @@
+OpenCV Error: Assertion failed (elements_read == 1) in icvGetHaarTraininDataFromVecCallback, file /home/volcan/Desktop/downloads/OpenCV/OpenCV-2.4.2/apps/haartraining/cvhaartraining.cpp, line 1859
+terminate called after throwing an instance of 'cv::Exception'
+  what():  /home/volcan/Desktop/downloads/OpenCV/OpenCV-2.4.2/apps/haartraining/cvhaartraining.cpp:1859: error: (-215) elements_read == 1 in function icvGetHaarTraininDataFromVecCallback
+
+OpenCV Error: Assertion failed (elements_read == 1) in icvGetHaarTraininDataFromVecCallback, file cvhaartraining.cpp, line 1859
+terminate called after throwing an instance of 'cv::Exception'
+  what():  /home/volcan/Desktop/downloads/OpenCV/OpenCV-2.4.2/apps/haartraining/cvhaartraining.cpp:1859: error: (-215) elements_read == 1 in function icvGetHaarTraininDataFromVecCallback
+
+
+
+
+
+
+
+
+
+
+
+
+|  18| 70%|+|-1.683449| 0.995405| 0.606667| 0.092983|
++----+----+-+---------+---------+---------+---------+
+|  19| 70%|-|-1.553927| 0.995051| 0.553333| 0.087322|
++----+----+-+---------+---------+---------+---------+
+|  20| 69%|+|-1.698981| 0.995405| 0.584333| 0.085092|
++----+----+-+---------+---------+---------+---------+
+|  21| 68%|-|-1.558499| 0.995051| 0.499667| 0.081146|
++----+----+-+---------+---------+---------+---------+
+Stage training time: 1173.00
+Number of used features: 21
+
+Parent node: 6
+Chosen number of splits: 0
+
+Total number of splits: 0
+
+Tree Classifier
+Stage
++---+---+---+---+---+---+---+---+
+|  0|  1|  2|  3|  4|  5|  6|  7|
++---+---+---+---+---+---+---+---+
+
+   0---1---2---3---4---5---6---7
+
+
+Parent node: 7
+
+*** 1 cluster ***
+OpenCV Error: Assertion failed (elements_read == 1) in icvGetHaarTraininDataFromVecCallback, file /home/volcan/Desktop/downloads/OpenCV/OpenCV-2.4.2/apps/haartraining/cvhaartraining.cpp, line 1859
+terminate called after throwing an instance of 'cv::Exception'
+  what():  /home/volcan/Desktop/downloads/OpenCV/OpenCV-2.4.2/apps/haartraining/cvhaartraining.cpp:1859: error: (-215) elements_read == 1 in function icvGetHaarTraininDataFromVecCallback
+
+Aborted
+
+
+
+Ref:http://opencv-users.1802565.n2.nabble.com/HaarTraining-with-OpenCV-error-td7580321.html
+Possible sol, use train_cascade instead: http://docs.opencv.org/doc/user_guide/ug_traincascade.html
+
+People with same problem:
+http://achuwilson.wordpress.com/2011/07/01/create-your-own-haar-classifier-for-detecting-objects-in-opencv/?blogsub=confirming#subscribe-blog
+http://opencv-users.1802565.n2.nabble.com/HaarTraining-with-OpenCV-error-td7580321.html

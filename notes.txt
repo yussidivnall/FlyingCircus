@@ -41,6 +41,8 @@ And delete bad images
 5. Generate image indexes
 $find ./positives/ -name "*.png" > ./positives.txt
 $find ./negatives/ -name "*.png" > ./negatives.txt
+#This might be wrong, positives.txt/negatives.txt might need to be in the format:
+#<imagefile> <Number of occurances of object> <bounding box x><y><w><h>
 
 6. Generate samples:
 $opencv_createsamples -info positives.txt -img  ./positives/*.png -bg negatives.txt -vec samples.vec -w 20 -h 20
@@ -51,3 +53,5 @@ to display the samples
 7. And create haar cascade:
 $opencv_haartraining -data training_data -vec samples.vec -bg negatives.dat -npos 110 -nneg 1000 -h 20 -w 20
 #Than talk a long walk, sleep, wake up, and wait.
+#Note, this fails, and is deprecated, use this instead:
+opencv_traincascade -data out1_training -vec out.vec -bg negatives.dat -numPos 2929 -numNeg 3000 -w 20 -h 20 -mode ALL
