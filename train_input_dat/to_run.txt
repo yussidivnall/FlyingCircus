@@ -1,0 +1,1 @@
+opencv_traincascade -data out2 -vec out.vec -bg negatives.dat -numPos 500 -numNeg 3000 -w 20 -h 20 -mode ALL
