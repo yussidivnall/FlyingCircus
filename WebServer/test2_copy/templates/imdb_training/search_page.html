@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Search by actor name</h2>
+    <form action="/imdb_training/result/" method="get">
+        <input type="text" name="q">
+        <input type="submit" value="Search">
+    </form>
+{% endblock %}

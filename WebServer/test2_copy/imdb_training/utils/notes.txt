@@ -1,0 +1,6 @@
+The faces are stored from each image in a dictionary like that:
+ret={}
+ret['image_name']={
+  path:'...', src:'...',
+  faces['face_name']={fs_path:'...' , src:'...' , square=[a,b,c,d] , classifier='...'}
+}

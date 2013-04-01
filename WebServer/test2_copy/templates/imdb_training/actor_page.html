@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if images_index %}
+    <h1> Found some index obj </h1>
+    <table class='profile' border=1>
+        <tr><th>profile</th></tr>
+        <tr><td><img src='{{ images_index.profile.src }}'/> </td> </tr>
+    </table> 
+    <br/><br/><br/>
+
+
+
+    <table class='images' border=1>
+    <form method='post' action='/imdb_training/update_positives/'>{% csrf_token %}
+    <div style='display:none'><input type='hidden' name='imdb_id' value='{{imdb_id}}' /></div>
+        {% for key,image in images_index.items %}
+            <tr>
+                <th colspan="0" > <img src='{{image.src}}' align='left' width='500'/></th>
+            </tr>
+            {% if image.faces %}
+                <tr>
+                {% for fkey,face in image.faces.items %}
+                   <td style='word-wrap: break-word;max-width: 120px;' >{{fkey}}</td>
+                {% endfor %}
+                </tr>
+                <tr>
+                {% for fkey,face in image.faces.items %}
+                   <td style='word-wrap: break-word;max-width: 120px;' ><img src='{{face.src}}' width='100' height='100' /> 
+                   {% if face.positive %} 
+                        <input type='checkbox' name='face{{fkey}}' value='{{fkey}}' checked="yes" />
+                    {%else %}
+                        <input type='checkbox' name='face{{fkey}}' value='{{fkey}}'/>
+                    {%endif %}
+                    </td>
+                {% endfor %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+    <tr><td><input type='submit' value='update faces index' /></td>
+    </form>
+    </table>
+
+    <br/><br/><br/>
+
+
+{% comment %}
+    <table class='pictures' border=1>
+
+        <tr> <td><img src='{{ images_index.profile.src }}'/> </td> </tr>
+        {% for key,value in images_index.items %} 
+        <tr>
+        <img src='{{value.src}}' /> 
+            {% if value.faces %}
+            <tr>
+                {% for fname,fval in value.faces.items %}
+                    <td>
+                        {{fname}} <br/>
+                        <img src='{{fval.src}}'/>
+                    </td>
+                {% endfor %}
+            </tr>
+            {%endif %}
+        </tr>
+        {% endfor %}
+        </tr>
+    </table>
+{% endcomment %}
+{% else %}
+    <h1> Why not ???</h1>
+{% endif %}
+<H1>Seems right...</H1>
+{% endblock %}

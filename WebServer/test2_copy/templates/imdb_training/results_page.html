@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+{% if actors %}
+    <table class='actors'>
+    <!--<form action='imdb_training/actor/' method='get'>-->
+    <form action='/imdb_training/actor/' method='get'>
+    <input type='submit' value='Select'>
+        {% for actor in actors %}
+            <tr>
+                <td><input type='radio' name='imdb_id' id='choose{{forloop.conunter}}' value='{{actor.id}}'/></td>
+                <td><img src='{{actor.img_src}}'/></td>
+                <td>{{actor.name}}</td>
+                <td>{{actor.id}}</td>
+                
+            </tr>
+        {% endfor %}
+    </form>
+    </table>
+{% else %}
+{% endif %}
+
+{% endblock %}
