@@ -14,6 +14,6 @@ dump_faces_from_stream.sh <video_file> <output_directory>
 Will dump all faces from a video file to an output directory, using a video.flv.frameNNNNN.png.faceM.png where M and N are integers.
 It works by first extracting all frames using ffmpeg, and than extracting all faces by using extract_faces.py on all frames.
 
-In the WebServer/ under test2 I implement some basic training using the imdb image database, this is done by some pysoup script which can easily be modified to use google images or any other imagewebpage.
+In the WebServer/ under test2 I implement some basic training using the imdb image database, this is done by some soup script which can easily be modified to use google images or any other imagewebpage.
 
 TODO: This readme and the one under WebServer.
